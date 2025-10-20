@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-NVIDIA Jetson Deployment Script for UDnet Underwater Image Enhancement
+NVIDIA Jetson Deployment Script for MarEye Underwater Image Enhancement
 =====================================================================
 
 This script demonstrates how to deploy the UDnet model on NVIDIA Jetson devices

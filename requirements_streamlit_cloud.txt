@@ -1,4 +1,4 @@
-# Streamlit Cloud Requirements for UDnet Underwater Image Enhancement
+# Streamlit Cloud Requirements for MarEye Underwater Image Enhancement
 # ===================================================================
 # Optimized for cloud deployment without system dependencies
 

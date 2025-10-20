@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Streamlit Launcher for UDnet Underwater Image Enhancement
+Streamlit Launcher for MarEye Underwater Image Enhancement
 =========================================================
 
 This script provides an easy way to launch the Streamlit app with proper configuration.
@@ -83,7 +83,7 @@ def main():
     
     args = parser.parse_args()
     
-    print("🌊 UDnet Underwater Image Enhancement - Streamlit App")
+    print("🌊 MarEye Underwater Image Enhancement - Streamlit App")
     print("=" * 60)
     
     # Check requirements

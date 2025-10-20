@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Streamlit App for UDnet Underwater Image Enhancement
+Streamlit App for MarEye Underwater Image Enhancement
 ====================================================
 
-A modern Streamlit interface for the UDnet underwater image enhancement pipeline.
+A modern Streamlit interface for the MarEye Underwater Image Enhancement pipeline.
 Features real-time processing, Jetson simulation, and comprehensive quality metrics.
 
 Usage:
@@ -36,7 +36,7 @@ from udnet_infer import UDNetEnhancer
 
 # Page configuration
 st.set_page_config(
-    page_title="UDnet Underwater Image Enhancement",
+    page_title="MarEye Underwater Image Enhancement",
     page_icon="🌊",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -976,7 +976,7 @@ def main():
     """Main Streamlit application."""
     
     # Header
-    st.markdown('<h1 class="main-header">🌊 UDnet Underwater Image Enhancement</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header">🌊 MarEye Underwater Image Enhancement</h1>', unsafe_allow_html=True)
     
     # Load models
     with st.spinner("Loading enhancement models..."):

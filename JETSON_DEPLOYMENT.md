@@ -1,6 +1,6 @@
 # NVIDIA Jetson Deployment Guide for UDnet
 
-This guide demonstrates how to deploy the UDnet underwater image enhancement model on NVIDIA Jetson devices for real-time edge inference.
+This guide demonstrates how to deploy the MarEye Underwater Image Enhancement model on NVIDIA Jetson devices for real-time edge inference.
 
 ##  Quick Start
 

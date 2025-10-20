@@ -1,4 +1,4 @@
-# Streamlit Requirements for UDnet Underwater Image Enhancement
+# Streamlit Requirements for MarEye Underwater Image Enhancement
 # =============================================================
 
 # Core Streamlit dependencies

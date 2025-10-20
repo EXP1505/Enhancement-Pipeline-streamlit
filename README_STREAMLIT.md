@@ -1,4 +1,4 @@
-# UDnet Underwater Image Enhancement - Streamlit App
+# MarEye Underwater Image Enhancement - Streamlit App
 
 A modern, interactive Streamlit application for underwater image enhancement using the UDnet deep learning model.
 
