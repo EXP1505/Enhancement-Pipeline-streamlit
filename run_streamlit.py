@@ -38,10 +38,10 @@ def check_requirements():
             missing_packages.append(package)
     
     if missing_packages:
-        print("❌ Missing required packages:")
+        print("Missing required packages:")
         for package in missing_packages:
             print(f"   - {package}")
-        print("\n💡 Install missing packages with:")
+        print("\nInstall missing packages with:")
         print(f"   pip install {' '.join(missing_packages)}")
         print("\n   Or install all requirements:")
         print("   pip install -r requirements_streamlit.txt")
@@ -63,12 +63,12 @@ def check_model_files():
             missing_files.append(file_path)
     
     if missing_files:
-        print("❌ Missing required files:")
+        print("Missing required files:")
         for file_path in missing_files:
             print(f"   - {file_path}")
         
         if 'weights/UDnet.pth' in missing_files:
-            print("\n💡 Download the UDnet model weights and place them in the weights/ directory")
+            print("\nDownload the UDnet model weights and place them in the weights/ directory")
         
         return False
     
@@ -83,34 +83,34 @@ def main():
     
     args = parser.parse_args()
     
-    print("🌊 MarEye Underwater Image Enhancement - Streamlit App")
+    print("MarEye Underwater Image Enhancement - Streamlit App")
     print("=" * 60)
     
     # Check requirements
     if not args.skip_checks:
-        print("🔍 Checking requirements...")
+        print("Checking requirements...")
         if not check_requirements():
             sys.exit(1)
-        print("✅ All required packages are installed")
+        print("All required packages are installed")
         
-        print("🔍 Checking model files...")
+        print("Checking model files...")
         if not check_model_files():
             sys.exit(1)
-        print("✅ All required files are present")
+        print("All required files are present")
     
     # Check for ONNX model
     if os.path.exists('UDnet_dynamic.onnx'):
-        print("✅ ONNX model found - ONNX Runtime will be available")
+        print("ONNX model found - ONNX Runtime will be available")
     else:
-        print("⚠️  ONNX model not found - only PyTorch model will be available")
+        print("ONNX model not found - only PyTorch model will be available")
         print("   Run 'python export_onnx.py' to create the ONNX model")
     
     # Launch Streamlit
-    print(f"\n🚀 Launching Streamlit app...")
+    print(f"\nLaunching Streamlit app...")
     print(f"   Host: {args.host}")
     print(f"   Port: {args.port}")
     print(f"   Theme: {args.theme}")
-    print(f"\n📱 Open your browser to: http://{args.host}:{args.port}")
+    print(f"\nOpen your browser to: http://{args.host}:{args.port}")
     print("\n" + "=" * 60)
     
     # Build Streamlit command
@@ -128,9 +128,9 @@ def main():
     try:
         subprocess.run(cmd, check=True)
     except KeyboardInterrupt:
-        print("\n👋 Streamlit app stopped by user")
+        print("\nStreamlit app stopped by user")
     except subprocess.CalledProcessError as e:
-        print(f"\n❌ Failed to launch Streamlit: {e}")
+        print(f"\nFailed to launch Streamlit: {e}")
         sys.exit(1)
 
 if __name__ == "__main__":

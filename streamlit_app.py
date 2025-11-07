@@ -327,10 +327,10 @@ def auto_clear_cache_after_operation():
 def manual_clear_cache():
     """Manually clear cache with user feedback."""
     if clear_all_cache():
-        st.success("✅ Cache cleared successfully!")
+        st.success("Cache cleared successfully!")
         st.rerun()
     else:
-        st.error("❌ Failed to clear cache")
+        st.error("Failed to clear cache")
 
 def get_cache_info():
     """Get information about current cache state."""
@@ -394,9 +394,9 @@ def _load_models_uncached():
             enhancer = UDNetEnhancer(
                 weights_path=weights_path, device=device, gpu_mode=gpu_mode
             )
-            st.success(f"✅ PyTorch model loaded successfully on {device.upper()}")
+            st.success(f"PyTorch model loaded successfully on {device.upper()}")
         except Exception as e:
-            st.warning(f"⚠️ PyTorch model failed to load: {e}")
+            st.warning(f"PyTorch model failed to load: {e}")
             # Fallback to CPU if GPU fails
             if device == "cuda":
                 try:
@@ -405,9 +405,9 @@ def _load_models_uncached():
                     enhancer = UDNetEnhancer(
                         weights_path=weights_path, device=device, gpu_mode=gpu_mode
                     )
-                    st.info("🔄 PyTorch model loaded on CPU (GPU fallback)")
+                    st.info("PyTorch model loaded on CPU (GPU fallback)")
                 except Exception as cpu_error:
-                    st.error(f"❌ PyTorch model failed on both GPU and CPU: {cpu_error}")
+                    st.error(f"PyTorch model failed on both GPU and CPU: {cpu_error}")
         
         # Load ONNX model for video processing (memory efficient)
         onnx_session = None
@@ -419,11 +419,11 @@ def _load_models_uncached():
                     onnx_path,
                     providers=["CPUExecutionProvider"]
                 )
-                st.success("✅ ONNX model loaded successfully for video processing")
+                st.success("ONNX model loaded successfully for video processing")
             else:
-                st.warning("⚠️ ONNX model file not found - video processing will be unavailable")
+                st.warning("ONNX model file not found - video processing will be unavailable")
         except Exception as e:
-            st.warning(f"⚠️ ONNX model failed to load: {e}")
+            st.warning(f"ONNX model failed to load: {e}")
         
         return enhancer, onnx_session, device, gpu_mode
     except Exception as e:
@@ -876,7 +876,7 @@ def process_video_streamlit(uploaded_video, model_type, neutralize_cast, saturat
                     pass
                 
                 progress_bar.progress(1.0)
-                status_text.text(f"✅ Video processing complete! Processed {processed_frames} frames, {successful_frames} successful")
+                status_text.text(f"Video processing complete! Processed {processed_frames} frames, {successful_frames} successful")
                 
                 return output_path, output_filename
             except Exception as encode_error:
@@ -904,7 +904,7 @@ def process_video_streamlit(uploaded_video, model_type, neutralize_cast, saturat
                     pass
                 
                 progress_bar.progress(1.0)
-                status_text.text(f"✅ Video processing complete! Processed {processed_frames} frames, {successful_frames} successful")
+                status_text.text(f"Video processing complete! Processed {processed_frames} frames, {successful_frames} successful")
                 
                 return output_path, output_filename
             except Exception as encode_error:
@@ -976,7 +976,7 @@ def main():
     """Main Streamlit application."""
     
     # Header
-    st.markdown('<h1 class="main-header">🌊 MarEye Underwater Image Enhancement</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header">MarEye Underwater Image Enhancement</h1>', unsafe_allow_html=True)
     
     # Load models
     with st.spinner("Loading enhancement models..."):
@@ -987,7 +987,7 @@ def main():
     
     # Sidebar
     with st.sidebar:
-        st.header("🎛️ Controls")
+        st.header("Controls")
         
         # Model selection (PyTorch for images, ONNX for videos)
         model_type = st.selectbox(
@@ -1002,7 +1002,7 @@ def main():
         saturation = st.slider("Saturation", 0.0, 2.0, 1.0, 0.05, help="Adjust image saturation")
         
         # Cache management
-        st.subheader("🧹 Cache Management")
+        st.subheader("Cache Management")
         st.session_state.auto_clear_cache = st.checkbox(
             "Auto-clear cache after operations", 
             value=st.session_state.auto_clear_cache,
@@ -1011,11 +1011,11 @@ def main():
         
         col1, col2 = st.columns(2)
         with col1:
-            if st.button("🗑️ Clear Cache", help="Manually clear all cache and free memory"):
+            if st.button("Clear Cache", help="Manually clear all cache and free memory"):
                 manual_clear_cache()
         
         with col2:
-            if st.button("🔄 Reload Models", help="Reload models and clear cache"):
+            if st.button("Reload Models", help="Reload models and clear cache"):
                 clear_all_cache()
                 st.session_state.enhancer = None
                 st.session_state.onnx_session = None
@@ -1028,15 +1028,15 @@ def main():
         **Memory Usage:** {cache_info['memory_usage']}
         **GPU Memory:** {cache_info['gpu_memory']}
         **Cache Clears:** {cache_info['cache_clears']}
-        **Auto-clear:** {'✅ Enabled' if cache_info['auto_clear_enabled'] else '❌ Disabled'}
+        **Auto-clear:** {'Enabled' if cache_info['auto_clear_enabled'] else 'Disabled'}
         """)
         
         # Device info
         st.subheader("System Info")
-        opencv_status = "✅ Available" if OPENCV_AVAILABLE else "⚠️ Not Available"
-        pytorch_status = "✅ Available" if enhancer is not None else "❌ Not Available"
-        onnx_status = "✅ Available" if onnx_session is not None else "❌ Not Available"
-        video_processing = "✅ ONNX Only" if onnx_session is not None else "❌ Unavailable"
+        opencv_status = "Available" if OPENCV_AVAILABLE else "Not Available"
+        pytorch_status = "Available" if enhancer is not None else "Not Available"
+        onnx_status = "Available" if onnx_session is not None else "Not Available"
+        video_processing = "ONNX Only" if onnx_session is not None else "Unavailable"
         st.info(f"**Device:** {device}\n**GPU Mode:** {gpu_mode}\n**PyTorch Model:** {pytorch_status}\n**ONNX Model:** {onnx_status}\n**OpenCV:** {opencv_status}\n**Video Processing:** {video_processing}")
         
         # Debug information for OpenCV
@@ -1063,18 +1063,18 @@ Platform: {sys.platform}
         
         col1, col2 = st.columns(2)
         with col1:
-            if st.button("▶️ Start", key="start_sim"):
+            if st.button("Start", key="start_sim"):
                 st.session_state.jetson_sim_data["is_running"] = True
                 st.session_state.jetson_sim_data["processed_frames"] = 0
                 st.success("Simulation started!")
         
         with col2:
-            if st.button("⏹️ Stop", key="stop_sim"):
+            if st.button("Stop", key="stop_sim"):
                 st.session_state.jetson_sim_data["is_running"] = False
                 st.info("Simulation stopped!")
     
     # Main content tabs
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(["🖼️ Image Enhancement", "🎬 Video Processing", "🚁 Jetson Demo", "📊 Performance", "🧹 Cache Management"])
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(["Image Enhancement", "Video Processing", "Jetson Demo", "Performance", "Cache Management"])
     
     with tab1:
         st.header("Image Enhancement")
@@ -1099,7 +1099,7 @@ Platform: {sys.platform}
             with col2:
                 st.subheader("Enhanced Image")
                 
-                if st.button("🚀 Enhance Image", type="primary"):
+                if st.button("Enhance Image", type="primary"):
                     with st.spinner("Enhancing image..."):
                         start_time = time.time()
                         
@@ -1119,7 +1119,7 @@ Platform: {sys.platform}
                             else:
                                 # Fallback logic
                                 if st.session_state.enhancer is not None:
-                                    st.info("🔄 Using PyTorch model (fallback)")
+                                    st.info("Using PyTorch model (fallback)")
                                     enhanced_image = st.session_state.enhancer.enhance_image(
                                         image,
                                         max_side=512,
@@ -1128,11 +1128,11 @@ Platform: {sys.platform}
                                     )
                                     model_used = "PyTorch"
                                 elif st.session_state.onnx_session is not None:
-                                    st.info("🔄 Using ONNX model (fallback)")
+                                    st.info("Using ONNX model (fallback)")
                                     enhanced_image = enhance_image_onnx(image, neutralize_cast, saturation)
                                     model_used = "ONNX Runtime"
                                 else:
-                                    st.error("❌ No models available!")
+                                    st.error("No models available!")
                                     enhanced_image = None
                                     model_used = "None"
                             
@@ -1161,7 +1161,7 @@ Platform: {sys.platform}
                                     st.metric("UIQM (After)", f"{metrics['uiqm_after']}", help="Underwater Image Quality Measure")
                                 
                                 # Processing info
-                                st.success(f"✅ Enhanced using {model_used} in {processing_time:.1f}ms")
+                                st.success(f"Enhanced using {model_used} in {processing_time:.1f}ms")
                                 
                                 # Download button
                                 buf = io.BytesIO()
@@ -1169,7 +1169,7 @@ Platform: {sys.platform}
                                 byte_im = buf.getvalue()
                                 
                                 st.download_button(
-                                    label="📥 Download Enhanced Image",
+                                    label="Download Enhanced Image",
                                     data=byte_im,
                                     file_name=f"enhanced_{uploaded_file.name}",
                                     mime="image/png"
@@ -1186,10 +1186,10 @@ Platform: {sys.platform}
                             auto_clear_cache_after_operation()
     
     with tab2:
-        st.header("🎬 Video Processing")
+        st.header("Video Processing")
         
         if not OPENCV_AVAILABLE:
-            st.error("⚠️ Video processing requires OpenCV")
+            st.error("Video processing requires OpenCV")
             st.info("**For local development:** `pip install opencv-python`")
             st.info("**For Streamlit Cloud:** The app should automatically install `opencv-python-headless`")
             st.warning("If you're seeing this on Streamlit Cloud, please check the deployment logs for OpenCV installation issues.")
@@ -1198,8 +1198,8 @@ Platform: {sys.platform}
             st.subheader("Alternative: Use Image Processing")
             st.info("While video processing is unavailable, you can still enhance individual frames using the Image Enhancement tab.")
         else:
-            st.success("✅ Video processing is available!")
-            st.info("💡 **Note:** Video processing always uses the ONNX model for optimal memory efficiency, while image processing uses your selected model above.")
+            st.success("Video processing is available!")
+            st.info("**Note:** Video processing always uses the ONNX model for optimal memory efficiency, while image processing uses your selected model above.")
             
             # Video processing parameters
             col1, col2 = st.columns(2)
@@ -1229,9 +1229,9 @@ Platform: {sys.platform}
                 
                 # Process video button
                 if st.session_state.onnx_session is None:
-                    st.error("⚠️ ONNX model not loaded - video processing unavailable")
+                    st.error("ONNX model not loaded - video processing unavailable")
                     st.info("Please restart the app or check if the ONNX model file exists.")
-                elif st.button("🚀 Enhance Video", type="primary"):
+                elif st.button("Enhance Video", type="primary"):
                     with st.spinner("Processing video... This may take a while."):
                         start_time = time.time()
                         
@@ -1242,7 +1242,7 @@ Platform: {sys.platform}
                                 st.error("ONNX model not available for video processing!")
                                 output_path, output_filename = None, None
                             else:
-                                st.info("🎯 Using ONNX model for video processing (memory optimized)")
+                                st.info("Using ONNX model for video processing (memory optimized)")
                                 output_path, output_filename = process_video_streamlit(
                                     uploaded_video, 
                                     video_model_type,  # Always ONNX
@@ -1255,7 +1255,7 @@ Platform: {sys.platform}
                             processing_time = time.time() - start_time
                             
                             if output_path and output_filename:
-                                st.success(f"✅ Video enhancement complete in {processing_time:.1f} seconds!")
+                                st.success(f"Video enhancement complete in {processing_time:.1f} seconds!")
                                 
                                 # Display enhanced video
                                 st.subheader("Enhanced Video")
@@ -1267,27 +1267,27 @@ Platform: {sys.platform}
                                     
                                     # Check if video file exists and has content
                                     if len(video_bytes) == 0:
-                                        st.error("❌ Enhanced video file is empty!")
+                                        st.error("Enhanced video file is empty!")
                                         return
                                     
-                                    st.info(f"📹 Video file size: {len(video_bytes) / (1024*1024):.1f} MB")
+                                    st.info(f"Video file size: {len(video_bytes) / (1024*1024):.1f} MB")
                                     
                                     # Validate video file
                                     is_valid, validation_msg = validate_video_file(output_path)
                                     if is_valid:
-                                        st.success(f"✅ {validation_msg}")
+                                        st.success(f"{validation_msg}")
                                     else:
-                                        st.warning(f"⚠️ {validation_msg}")
+                                        st.warning(f"{validation_msg}")
                                     
                                     # Display video with error handling
                                     try:
                                         st.video(video_bytes)
-                                        st.success("✅ Video displayed successfully!")
+                                        st.success("Video displayed successfully!")
                                     except Exception as video_error:
-                                        st.error(f"❌ Failed to display video: {video_error}")
+                                        st.error(f"Failed to display video: {video_error}")
                                         
                                         # Try alternative display method
-                                        st.info("🔄 Trying alternative video display method...")
+                                        st.info("Trying alternative video display method...")
                                         try:
                                             # Create a base64 encoded video for HTML display
                                             import base64
@@ -1299,19 +1299,19 @@ Platform: {sys.platform}
                                             </video>
                                             """
                                             components.html(video_html, height=400)
-                                            st.success("✅ Video displayed using alternative method!")
+                                            st.success("Video displayed using alternative method!")
                                         except Exception as alt_error:
-                                            st.error(f"❌ Alternative display also failed: {alt_error}")
-                                            st.info("💡 Please use the download button to get your enhanced video.")
+                                            st.error(f"Alternative display also failed: {alt_error}")
+                                            st.info("Please use the download button to get your enhanced video.")
                                         
                                 except FileNotFoundError:
-                                    st.error(f"❌ Enhanced video file not found: {output_path}")
+                                    st.error(f"Enhanced video file not found: {output_path}")
                                 except Exception as file_error:
-                                    st.error(f"❌ Error reading video file: {file_error}")
+                                    st.error(f"Error reading video file: {file_error}")
                                 
                                 # Download button
                                 st.download_button(
-                                    label="📥 Download Enhanced Video",
+                                    label="Download Enhanced Video",
                                     data=video_bytes,
                                     file_name=output_filename,
                                     mime="video/mp4"
@@ -1348,7 +1348,7 @@ Platform: {sys.platform}
                             auto_clear_cache_after_operation()
                 
                 # Video processing tips
-                with st.expander("💡 Video Processing Tips"):
+                with st.expander("Video Processing Tips"):
                     st.markdown("""
                     **For Best Results:**
                     - Use MP4 format for best compatibility
@@ -1368,7 +1368,7 @@ Platform: {sys.platform}
                     """)
     
     with tab3:
-        st.header("🚁 Jetson Deployment Demo")
+        st.header("Jetson Deployment Demo")
         
         # Jetson simulation
         if st.session_state.jetson_sim_data["is_running"]:
@@ -1446,7 +1446,7 @@ Platform: {sys.platform}
             st.rerun()
     
     with tab4:
-        st.header("📊 Performance Analysis")
+        st.header("Performance Analysis")
         
         # Model information
         st.subheader("Model Information")
@@ -1475,12 +1475,12 @@ Platform: {sys.platform}
         st.subheader("Deployment Readiness")
         
         readiness_items = [
-            ("✅ ONNX Model", "3.3 MB - Optimized for edge"),
-            ("✅ Memory Efficient", "0.01 GB GPU memory"),
-            ("✅ Real-time Ready", "12-66 FPS performance"),
-            ("✅ TensorRT Ready", "2-3x speedup available"),
-            ("✅ AUV/ROV Ready", "Production-ready deployment"),
-            ("✅ Quality Metrics", "PSNR, SSIM, UIQM assessment")
+            ("ONNX Model", "3.3 MB - Optimized for edge"),
+            ("Memory Efficient", "0.01 GB GPU memory"),
+            ("Real-time Ready", "12-66 FPS performance"),
+            ("TensorRT Ready", "2-3x speedup available"),
+            ("AUV/ROV Ready", "Production-ready deployment"),
+            ("Quality Metrics", "PSNR, SSIM, UIQM assessment")
         ]
         
         for status, description in readiness_items:
@@ -1499,7 +1499,7 @@ Platform: {sys.platform}
         """)
     
     with tab5:
-        st.header("🧹 Cache Management")
+        st.header("Cache Management")
         
         # Cache status overview
         st.subheader("Current Cache Status")
@@ -1513,7 +1513,7 @@ Platform: {sys.platform}
         with col3:
             st.metric("Cache Clears", cache_info['cache_clears'])
         with col4:
-            st.metric("Auto-clear", "✅ Enabled" if cache_info['auto_clear_enabled'] else "❌ Disabled")
+            st.metric("Auto-clear", "Enabled" if cache_info['auto_clear_enabled'] else "Disabled")
         
         # Cache controls
         st.subheader("Cache Controls")
@@ -1521,11 +1521,11 @@ Platform: {sys.platform}
         col1, col2, col3 = st.columns(3)
         
         with col1:
-            if st.button("🗑️ Clear All Cache", type="primary", help="Clear all Streamlit cache and free memory"):
+            if st.button("Clear All Cache", type="primary", help="Clear all Streamlit cache and free memory"):
                 manual_clear_cache()
         
         with col2:
-            if st.button("🔄 Reload Models", help="Reload models and clear cache"):
+            if st.button("Reload Models", help="Reload models and clear cache"):
                 clear_all_cache()
                 st.session_state.enhancer = None
                 st.session_state.onnx_session = None
@@ -1533,7 +1533,7 @@ Platform: {sys.platform}
                 st.rerun()
         
         with col3:
-            if st.button("🧹 Force Garbage Collection", help="Force Python garbage collection"):
+            if st.button("Force Garbage Collection", help="Force Python garbage collection"):
                 import gc
                 collected = gc.collect()
                 st.success(f"Garbage collection completed! Collected {collected} objects.")
@@ -1578,17 +1578,17 @@ Platform: {sys.platform}
         # Memory optimization tips
         st.subheader("Memory Optimization Tips")
         
-        with st.expander("💡 Tips for Better Memory Management"):
+        with st.expander("Tips for Better Memory Management"):
             st.markdown("""
             **Automatic Cache Clearing:**
-            - ✅ **Enabled by default** - Cache is cleared after each operation
-            - ✅ **Prevents memory leaks** - Ensures consistent performance
-            - ✅ **GPU memory management** - Clears CUDA cache automatically
+            - **Enabled by default** - Cache is cleared after each operation
+            - **Prevents memory leaks** - Ensures consistent performance
+            - **GPU memory management** - Clears CUDA cache automatically
             
             **Manual Cache Management:**
-            - 🗑️ **Clear All Cache** - Use when memory usage is high
-            - 🔄 **Reload Models** - Use when models become unresponsive
-            - 🧹 **Garbage Collection** - Use for Python object cleanup
+            - **Clear All Cache** - Use when memory usage is high
+            - **Reload Models** - Use when models become unresponsive
+            - **Garbage Collection** - Use for Python object cleanup
             
             **Best Practices:**
             1. Keep auto-clear enabled for most use cases
